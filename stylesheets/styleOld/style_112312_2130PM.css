@@ -1,0 +1,182 @@
+.image {
+	float:left; 
+	margin-top: 10px;
+	margin-left: 20px;
+	border-style: solid;
+	border-color: black;
+	border-width: 3px;
+	padding: 10px;
+}
+.form {
+	float:left;
+	margin-left: 20px;
+	margin-top: 10px;
+	border-style: solid;
+	border-color: black;
+	border-width: 3px;
+	padding-left: 5px;
+	padding-right: 8px;
+}
+.param{
+	font-family: sans, arial, sans-serif;
+	font-size: 24px;
+	width: 200px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	font-weight:bold;
+}
+.paramValue {
+	font-family: sans, arial, sans-serif;
+	font-size: 24px;
+	width: 125px;
+	color: black;
+	background-color: #C0C0C0;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	text-align:right;
+	margin-top: 4px;
+	margin-bottom:4px;
+}
+.instructions {
+	font-family: sans, arial, sans-serif;
+	font-size: 20px;
+	clear:both;
+	margin-left: 25px;
+	width: 920px;
+}
+.footnote {
+	font-family: sans, arial, sans-serif;
+	font-size: 20px;
+	clear:both;
+	margin-left: 25px;
+	width: 920px;
+}
+.sectionHeader {
+	font-family: sans, arial, sans-serif;
+	font-size: 24px;
+	text-decoration: underline;
+	font-weight:bold;
+	clear:both;
+	margin-left: 25px;
+	padding-top: 20px;
+}
+.link {
+	color:red;
+	text-decoration:none;
+}
+.link:hover {
+	text-decoration:underline;
+}
+.submitButton {
+	float: right;
+	font-family: sans, arial, sans-serif;
+	background-color: #C0C0C0;
+	color:black;
+	font-size:24px;
+	border-style: solid;
+	border-color: black;
+	border-width: 3px;
+	margin-left:5px;
+	margin-top:8px;
+	margin-bottom:8px;
+}
+.submitButton:hover {
+	background-color: #C0C0C0;
+	color:red;
+}
+.submitButton:active {
+	background-color: black;
+	border-color: #C0C0C0;
+}
+#file_browse {
+margin-left:0px;
+opacity:0;
+}
+#file_browse_wrapper {
+	float: right;
+	width: 256px;
+	height: 38px;
+	background-image: url('/static/Browse.png');
+	background-repeat:no-repeat;
+	background-position:0 0;
+	border:none;
+	margin-top: 8px;
+	margin-bottom:8px;
+	overflow:hidden;
+}
+#file_browse_wrapper:hover {
+background: url('/static/Browse_Hover.png') 0 0 no-repeat;
+}
+#file_browse_wrapper:active {
+background: url('/static/Browse_click.png') 0 0 no-repeat;
+}
+#excelFile{
+	float:right;
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	margin-top: 4px;
+	font-weight:bold;
+}
+.loopFilterTable {
+	width: 450px;
+	margin: 25px;
+	background-color:black;
+}
+.loopFilterTableHeader {
+	font-family: sans, arial, sans-serif;
+	color: black;
+	background-color: #C0C0C0;
+	font-size: 28px;
+	font-weight: bold;
+	text-align:center;
+}
+.loopFilterTableParameter {
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: white;
+	text-align:center;
+	position: relative;
+}
+.loopFilterTableValue {
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: white;
+	text-align:center;
+}
+.largeHeader {
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 28px;
+	font-weight: bold;
+	text-decoration: underline;
+	margin-left:20px;
+}
+.gChart{
+	width: 600px;
+	height: 425px;
+	float: left;
+}
+.gChart2{
+	width: 1200px;
+	height: 850px;
+	float: left;
+}
+.bigBorder {
+	width: 100%;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+}
+.error {
+	font-family: sans, arial, sans-serif;
+	font-size: 20px;
+	clear:both;
+	margin-left: 25px;
+	color: red;
+}

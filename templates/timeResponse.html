@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Time', 'Frequency'],
+			[{{ t[0] }},  {{ fT[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 seconds"
+		});
+		
+		{% for i in indexT %}
+		data.addRows([[{{ t[i] }}, {{ fT[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:100,top:100,width:"85%",height:"80%"},
+          curveType: "function",
+		  title: 'PLL Response to a frequency step',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Time (s)', format: "0.000E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'Frequency (Hz)', format: "0.000E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div6'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+	<div class="timeResponseChartContainer">
+		<div class="timeResponseChartHeaderContainer"><div class="timeResponseChartHeader">Time Response </div></div>
+		<div id="chart_div6" class="timeResponseChart"></div>
+		<table class = "lockTimesTable">
+			<thead>
+				<tr>
+					<th colspan="2" class="lockTimesTableHeader">
+						PLL Lock Times
+					</th>
+				</tr>
+			</thead>
+			<tr>
+				<td a class="lockTimesTableParameter">
+					Loop locks within 0.001% ({{ lT_0p001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="lockTimesTableValue">
+					{{ lT_0p001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="lockTimesTableParameter" >
+					Loop locks within 0.0001% ({{ lT_0p0001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="lockTimesTableValue">
+					{{ lT_0p0001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="lockTimesTableParameter" >
+					Loop locks within 0.00001% ({{ lT_0p00001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="lockTimesTableValue">
+					{{ lT_0p00001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="lockTimesTableParameter" >
+					Loop locks within 0.000001% ({{ lT_0p000001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="lockTimesTableValue">
+					{{ lT_0p000001Pcnt }} s
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+  </body>
+</html>
+

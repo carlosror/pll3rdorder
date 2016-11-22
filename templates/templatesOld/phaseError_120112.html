@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+    <head>
+        <title></title>
+        <script type="text/javascript">
+            function calcResult(){
+                document.getElementById('result').innerHTML = '';
+                var num1 = new Number(document.getElementById('txt1').value);
+                var num2 = new Number(document.getElementById('txt2').value);
+                if(isNaN(num1) || isNaN(num2)){
+                    alert('One or both inputs are not a number');
+                } else {
+                    document.getElementById('result').innerHTML = num1 - num2;
+                }
+				//document.getElementById('result2').innerHTML = {{ f[1] }} - {{ f[0] }};
+            }
+			function findClosest(x,f){
+				var fLength=f.length;
+				var smallestError = f[fLength-1];
+				var index;
+				for (var i=0; i<(fLength-1); i++){
+					if (Math.abs(x-f[i])<smallestError){
+						index = i;
+						smallestError = Math.abs(x-f[i]);
+					}
+					//smallestError=f[i];
+				}
+				return index;
+			}
+			function simpsonIntegral(ll,ul,frequencyArray,funcOfFreq){
+				var actualLLIndex = findClosest(ll,frequencyArray);
+				var lowerFreq = frequencyArray[actualLLIndex];
+				var actualULIndex = findClosest(ul,frequencyArray);
+				var upperFreq = frequencyArray[actualULIndex];
+				var midPoint = (ll + ul)/2.0;
+				var actualMidPointIndex = findClosest(midPoint,frequencyArray);
+				var midFreq = frequencyArray[actualMidPointIndex];
+				var intValue = ((upperFreq - lowerFreq)/6.0)*(funcOfFreq[actualLLIndex] + 4*funcOfFreq[actualMidPointIndex] + funcOfFreq[actualULIndex]);
+				return intValue;
+			}
+            window.onload=function(){
+				var fCopy=new Array();
+				fCopy[0] = {{ f[0] }};
+				var tNoise = new Array();
+				tNoise[0] = {{ TotalNoise_V2Hz[0] }};
+				{% for i in index2 %}
+				fCopy.push({{ f[i] }});
+				tNoise.push({{ TotalNoise_V2Hz[i] }});
+				{% endfor %}
+				var fout2 = {{ fout }};
+				var fLength = fCopy.length;
+				var integFreq=new Array();
+				for (var i=0; i<(fLength); i++){
+					integFreq[i]=(fCopy[i]*fCopy[i])*tNoise[i];
+				}
+				var ll = 1.7e3;
+				var ul = 200e3;
+				var freqError = Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,integFreq));
+				var phaseError = (180/Math.PI)*Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,tNoise));
+				var jitter = phaseError/360.0/fout2;
+				document.getElementById('result2').innerHTML = freqError;
+                //document.getElementById('btnCalc').onclick = calcResult;
+				//document.getElementById('result2').innerHTML = {{ f[1] }} - {{ f[0] }};
+				//when the browser loads the page it will run calcResult function
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            Enter value 1 <input type="text" id="txt1" /><br />
+            Enter value 2 <input type="text" id="txt2" /><br />
+            <button type="submit" id="btnCalc">Calculate difference</button>
+            <br>Result: <span id="result" ></span>
+			<br>Result2: <span id="result2" ></span>
+        </div>
+    </body>
+</html>

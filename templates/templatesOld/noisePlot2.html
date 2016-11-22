@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'Closed Loop Magnitude Response'],
+			[{{ f[0] }},  {{ magCL[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"##.##"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.###E0"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ magCL[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+          curveType: "function",
+		  title: 'Closed Loop Magnitude Response',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.#E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minValue: 0.1, minorGridlines: {count: 1}},
+		  vAxis:{title:'Magnitude', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+      }
+	  
+	  
+    </script>
+  </head>
+  <body>
+    <p class="Header">Loop Response Transfer Functions</p>
+    <div id="chart_div5" class="gChart"></div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+    <head>
+        <title></title>
+        <script type="text/javascript">
+			function findClosest(x,f){
+				var fLength=f.length;
+				var smallestError = f[fLength-1];
+				var index;
+				for (var i=0; i<(fLength); i++){
+					if (Math.abs(x-f[i])<smallestError){
+						index = i;
+						smallestError = Math.abs(x-f[i]);
+					}
+					//smallestError=f[i];
+				}
+				return index;
+			}
+			function simpsonIntegral(ll,ul,frequencyArray,funcOfFreq){
+				var actualLLIndex = findClosest(ll,frequencyArray);
+				var lowerFreq = frequencyArray[actualLLIndex];
+				var actualULIndex = findClosest(ul,frequencyArray);
+				var upperFreq = frequencyArray[actualULIndex];
+				var midPoint = (ll + ul)/2.0;
+				var actualMidPointIndex = findClosest(midPoint,frequencyArray);
+				var midFreq = frequencyArray[actualMidPointIndex];
+				var intValue = ((upperFreq - lowerFreq)/6.0)*(funcOfFreq[actualLLIndex] + 4*funcOfFreq[actualMidPointIndex] + funcOfFreq[actualULIndex]);
+				return intValue;
+			}
+			function intNoiseError () {
+				var llIN = new Number(document.getElementById('txt1').value);
+				var ulIN = new Number(document.getElementById('txt2').value);
+				var fCopy=new Array();
+				fCopy[0] = {{ f[0] }};
+				var tNoise = new Array();
+				tNoise[0] = {{ TotalNoise_V2Hz[0] }};
+				{% for i in index2 %}
+				fCopy.push({{ f[i] }});
+				tNoise.push({{ TotalNoise_V2Hz[i] }});
+				{% endfor %}
+				var fout2 = {{ fout }};
+				var fLength = fCopy.length;
+				var integFreq=new Array();
+				for (var i=0; i<(fLength); i++){
+					integFreq[i]=(fCopy[i]*fCopy[i])*tNoise[i];
+				}
+				var ll=llIN;
+				var ul=ll*2;
+				var areaUndertNoise=0.0;
+				var areaUnderintegFreq=0.0;
+				while (ul<=ulIN) {
+					areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ul,fCopy,tNoise));
+					areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ul,fCopy,integFreq);
+					//document.writeln(phaseError);
+					//document.writeln(freqError);
+					ll=ul;
+					ul=ul*2;
+				}
+				areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ulIN,fCopy,tNoise));
+				var phaseError = (180/Math.PI)*Math.sqrt(areaUndertNoise);
+				//document.writeln(phaseError);
+				areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ulIN,fCopy,integFreq);
+				var freqError = Math.sqrt(areaUnderintegFreq)
+				//document.writeln(freqError)
+				//document.writeln(phaseError);
+				var jitter = phaseError/360.0/fout2;
+				//var banerjeertNoisedB = new Array();
+				//var banerjeetNoise = new Array();
+				//var banerjeerFreq = new Array();
+				//banerjeetNoisedB = [-77.0, -80.0, -81.5, -82.0, -81.5, -81.0, -78.0, -76.5, -76.0, -79.0, -81.5, -88.0, -94.0, -100.0, -107.0, -113.5, -121.0, -128.5, -136.0, -143.5, -151.0]
+				//banerjeeFreq = [1.00e+02, 1.58e+02, 2.51e+02, 3.98e+02, 6.31e+02, 1.00e+03, 1.58e+03, 2.51e+03, 3.98e+03, 6.31e+03, 1.00e+04, 1.58e+04, 2.51e+04, 3.98e+04, 6.31e+04, 1.00e+05, 1.58e+05, 2.51e+05, 3.98e+05, 6.31e+05, 1.00e+06]
+				//for (var j=0; j<18; j++){
+					//banerjeetNoise[j] = (banerjeeFreq[j])*(banerjeeFreq[j])*Math.pow(10,banerjeetNoisedB[j]/10.0);
+				//}
+				//banerjeetNoise[0] = Math.pow(10,banerjeetNoisedB[0]/10.0);
+				//var freqError = Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,integFreq));
+				document.getElementById('phaseErrorResult').innerHTML = phaseError.toFixed(3)+' degrees';
+				document.getElementById('jitterResult').innerHTML = jitter.toExponential(3)+' s';
+				document.getElementById('freqErrorResult').innerHTML = freqError.toFixed(3)+' Hz';
+			}
+            window.onload=function(){
+				
+				//var ll = 1.7e3;
+				//var ul = 200e3;
+				//var freqError = Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,integFreq));
+				//var phaseError = (180/Math.PI)*Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,tNoise));
+				//var jitter = phaseError/360.0/fout2;
+				//document.getElementById('result2').innerHTML = freqError;
+                document.getElementById('btnCalc').onclick = intNoiseError
+				//document.getElementById('result2').innerHTML = {{ f[1] }} - {{ f[0] }};
+				//when the browser loads the page it will run calcResult function
+            }
+        </script>
+    </head>
+    <body>
+			<table class="intNoiseForm">
+				<tr>
+					<td class = "intNoiseParam">
+						Lower Integration Limit
+					</td>
+					<td>
+						<input type="text" id="txt1" class="paramValue" value="1.7E3">
+					</td>
+				</tr>
+				<tr>
+					<td class = "intNoiseParam">
+						Upper Integration Limit
+					</td>
+					<td>
+						<input type="text" id="txt2" class="paramValue" value="200E3">
+					</td>
+				</tr>
+				<tr>
+					<th colspan="2">
+						<button type="submit" id="btnCalc" class="submitButton">Estimate Phase Error</button>
+					</th>
+				</tr>
+			</table>
+			<br>
+		<table class = "intNoiseTable">
+			<thead>
+				<tr>
+					<th colspan="2" class="loopFilterTableHeader">
+						RMS Phase Error
+					</th>
+				</tr>
+			</thead>
+			<tr>
+				<td a class="intNoiseTableParameter">
+					RMS Phase Error
+				</td>
+				<td class="intNoiseTableValue">
+					<span id="phaseErrorResult" ></span>
+				</td>
+			</tr>
+			<tr>
+				<td a class="intNoiseTableParameter">
+					Jitter
+				</td>
+				<td class="intNoiseTableValue">
+					<span id="jitterResult" ></span>
+				</td>
+			</tr>
+			<tr>
+				<td a class="intNoiseTableParameter">
+					RMS Frequency Error
+				</td>
+				<td class="intNoiseTableValue">
+					<span id="freqErrorResult" ></span>
+				</td>
+			</tr>
+		</table>
+		<br>
+    </body>
+</html>

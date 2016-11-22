@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+    <head>
+        <title></title>
+        <script type="text/javascript">
+            function calcResult(){
+                document.getElementById('result').innerHTML = '';
+                var num1 = new Number(document.getElementById('txt1').value);
+                var num2 = new Number(document.getElementById('txt2').value);
+                if(isNaN(num1) || isNaN(num2)){
+                    alert('One or both inputs are not a number');
+                } else {
+                    document.getElementById('result').innerHTML = num1 - num2;
+                }
+            }
+            window.onload=function(){
+                document.getElementById('btnCalc').onclick = calcResult;
+				//when the browser loads the page it will run calcResult function
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            Enter value 1 <input type="text" id="txt1" /><br />
+            Enter value 2 <input type="text" id="txt2" /><br />
+            <button type="submit" id="btnCalc">Calculate difference</button>
+            <br>Result: <span id="result" ></span>
+        </div>
+    </body>
+</html>

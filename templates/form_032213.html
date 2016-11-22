@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Third Order PLL App</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+	</head>
+	<body>
+		<img class="image" src="/images/PLLDiagram.png">
+		<form method="post" enctype="multipart/form-data" class="form">
+			<table>
+				<tr>
+					<td class = "param">
+						K<sub>&Phi;</sub>
+					</td>
+					<td>
+						<input type="text" name="Kphi" class="paramValue" value={{ dictStringSubst['Kphi'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						K<sub>VCO</sub>
+					</td>
+					<td>
+						<input type="text" name="KVCO" class="paramValue" value={{ dictStringSubst['KVCO'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						P
+					</td>
+					<td>
+						<input type="text" name="P" class="paramValue" value={{ dictStringSubst['P'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Phase Margin
+					</td>
+					<td>
+						<input type="text" name="PM" class="paramValue" value={{ dictStringSubst['PM'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Loop Bandwidth
+					</td>
+					<td>
+						<input type="text" name="LoopBW" class="paramValue" value={{ dictStringSubst['LoopBW'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						F<sub>out</sub>
+					</td>
+					<td>
+						<input type="text" name="Fout" class="paramValue" value={{ dictStringSubst['Fout'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						F<sub>ref</sub>
+					</td>
+					<td>
+						<input type="text" name="Fref" class="paramValue" value={{ dictStringSubst['Fref'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						R
+					</td>
+					<td>
+						<input type="text" name="R" class="paramValue" value={{ dictStringSubst['R'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						T<sub>31</sub>
+					</td>
+					<td>
+						<input type="text" name="T31" class="paramValue" value={{ dictStringSubst['T31'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Gamma
+					</td>
+					<td>
+						<input type="text" name="Gamma" class="paramValue" value={{ dictStringSubst['Gamma'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="param">
+						Generate Excel report<input type="checkbox" name="excelResults" value="wantExcelResults" >
+					</td>
+				</tr>
+				<tr>
+					<td class="paramSmall">
+						Upload noise file:
+					</td>
+					<td >
+						<div id='file_browse_wrapper'><input type="file" name="noiseFile" id='file_browse'></div>
+					</td>
+				</tr>
+			</table>
+			<input type="submit" value="Evaluate PLL" class="submitButton">			
+		</form>
+		<p class="error">{{ dictStringSubst['error'] }}</p>
+		<p class="sectionHeader">Instructions:</p>
+		<ul class="instructions">
+		<li class="instructions">Enter PLL parameters and submit by clicking on "Evaluate PLL".</li>
+		<li class="instructions">If a noise file isn't uploaded, noise plots are generated using default noise data. <a class = "link" href="/download/noiseSources">Download</a> the default noise file, 
+		edit the noise data, and upload the file to generate noise plots with your noise data. If there's an error reading the file, the app will use the default noise data
+		 and warn the user.</li>
+		<li class="instructions">Following the phase noise plot, enter an integration interval to estimate the RMS phase error.</li>
+		<li class="instructions">Checking "Generate Excel report" and submitting prints results to an Excel file.</li>
+		<li class="instructions">NO DATA IS STORED.</li>
+		</ul>
+		<p class="sectionHeader">References:</p>
+		<p class="footnote">
+		<sup>1</sup><em><a class = "link" href="http://www.ti.com/tool/pll_book" target="_blank">
+		PLL Performance Simulation and Design Handbook - 4th Edition</em></a>
+		 Dean Banerjee. 2006.<br><br></p>
+		<p><a class = "contact" href="mailto:carlosgg123@gmail.com?subject=Brilliant PLL tool!">Contact</a></p>
+	</body>
+</html>

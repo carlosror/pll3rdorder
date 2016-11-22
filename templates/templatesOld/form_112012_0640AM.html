@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Third Order PLL App</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+	</head>
+	<body>
+		<img type="image/png" class="image" src="static/PLL_diagram2_small.png">
+		<form method="post" enctype="multipart/form-data" class="form">
+			<table>
+				<tr>
+					<td class = "param">
+						K<sub>&Phi;</sub>
+					</td>
+					<td>
+						<input type="text" name="Kphi" class="paramValue" value={{ dictStringSubst['Kphi'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						K<sub>VCO</sub>
+					</td>
+					<td>
+						<input type="text" name="KVCO" class="paramValue" value={{ dictStringSubst['KVCO'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Phase Margin
+					</td>
+					<td>
+						<input type="text" name="PM" class="paramValue" value={{ dictStringSubst['PM'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Loop Bandwidth
+					</td>
+					<td>
+						<input type="text" name="LoopBW" class="paramValue" value={{ dictStringSubst['LoopBW'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						F<sub>out</sub>
+					</td>
+					<td>
+						<input type="text" name="Fout" class="paramValue" value={{ dictStringSubst['Fout'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						F<sub>comp</sub>
+					</td>
+					<td>
+						<input type="text" name="Fcomp" class="paramValue" value={{ dictStringSubst['Fcomp'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						T<sub>31</sub>
+					</td>
+					<td>
+						<input type="text" name="T31" class="paramValue" value={{ dictStringSubst['T31'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "param">
+						Gamma
+					</td>
+					<td>
+						<input type="text" name="Gamma" class="paramValue" value={{ dictStringSubst['Gamma'] }}>
+					</td>
+				</tr>
+			</table>
+			<input type="file" name="noiseFile"><input type="submit" value="Evaluate PLL" class="submitButton">
+			</form>
+			
+		</form>
+		<p class="sectionHeader">Instructions:</p>
+		<p class="instructions">1. <a class = "link" href="/download/noiseSources">Download</a> the noise file
+		and edit the noise data only.</p>
+		<p class="instructions">2. Upload it, enter loop parameters, and submit. If no file is uploaded, default noise data is used.</p>
+		<p class="sectionHeader">References:</p>
+		<p class="footnote">
+		<sup>1</sup><em><a class = "link" href="http://www.ti.com/tool/pll_book" target="_blank">
+		PLL Performance Simulation and Design Handbook - 4th Edition</em></a>
+		 Dean Banerjee. 2006.<br><br></p>
+	</body>
+</html>

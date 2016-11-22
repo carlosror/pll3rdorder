@@ -1,0 +1,207 @@
+﻿<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'XTAL Noise', 'PFDCP Noise', 'Prescaler Noise', 'VCO Noise', 'R2 Noise', 'R3 Noise', 'SD Noise', 'Total Noise'],
+			[{{ f[0] }},  {{ XTALNoiseOut[0] }}, {{ PFDCPNoiseOut[0] }}, {{ PrescalerNoiseOut[0] }}, {{ VCONoiseOut[0] }}, {{ R2NoiseOut[0] }}, {{ R3NoiseOut[0] }}, {{ SDNoiseOut[0] }}, {{ TotalNoise[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dBc/Hz"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ XTALNoiseOut[i] }}, {{ PFDCPNoiseOut[i] }}, {{ PrescalerNoiseOut[i] }}, {{ VCONoiseOut[i] }},  {{ R2NoiseOut[i] }}, {{ R3NoiseOut[i] }}, {{ SDNoiseOut[i] }}, {{ TotalNoise[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterYtoolTips.format(data, 2);//format y Axis tooltips
+		formatterYtoolTips.format(data, 3);//format y Axis tooltips
+		formatterYtoolTips.format(data, 4);//format y Axis tooltips
+		formatterYtoolTips.format(data, 5);//format y Axis tooltips
+		formatterYtoolTips.format(data, 6);//format y Axis tooltips
+		formatterYtoolTips.format(data, 7);//format y Axis tooltips
+		formatterYtoolTips.format(data, 8);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:80,top:100,width:"85%",height:"80%"},
+          curveType: "function",
+		  title: '锁相环输出噪声贡献',
+		  lineWidth: 2,
+		  legend:{position: 'top', textStyle: {color: 'blue', fontSize: 11.5}},
+		  colors:['#CC3300','#FF00FF','#0000FF', '#00FF00', '#660000', '#0099FF', '#FF9900', '#FF0000'],
+		  series: [{}, {}, {}, {}, {}, {}, {}, {color: 'red', lineWidth: 4}],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'频率 (Hz)', format: "0.#E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'锁相环输出噪声 (dBc/Hz)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+      }
+	  
+	  
+    </script>
+	<script type="text/javascript">
+			function findClosest(x,f){
+				var fLength=f.length;
+				var smallestError = f[fLength-1];
+				var index;
+				for (var i=0; i<(fLength); i++){
+					if (Math.abs(x-f[i])<smallestError){
+						index = i;
+						smallestError = Math.abs(x-f[i]);
+					}
+					//smallestError=f[i];
+				}
+				return index;
+			}
+			function simpsonIntegral(ll,ul,frequencyArray,funcOfFreq){
+				var actualLLIndex = findClosest(ll,frequencyArray);
+				var lowerFreq = frequencyArray[actualLLIndex];
+				var actualULIndex = findClosest(ul,frequencyArray);
+				var upperFreq = frequencyArray[actualULIndex];
+				var midPoint = (ll + ul)/2.0;
+				var actualMidPointIndex = findClosest(midPoint,frequencyArray);
+				var midFreq = frequencyArray[actualMidPointIndex];
+				var intValue = ((upperFreq - lowerFreq)/6.0)*(funcOfFreq[actualLLIndex] + 4*funcOfFreq[actualMidPointIndex] + funcOfFreq[actualULIndex]);
+				return intValue;
+			}
+			function intNoiseError () {
+				var llIN = new Number(document.getElementById('txt1').value);
+				var ulIN = new Number(document.getElementById('txt2').value);
+				var fCopy=new Array();
+				fCopy[0] = {{ fInterpol[0] }};
+				var tNoise = new Array();
+				tNoise[0] = {{ TotalNoise_V2Hz[0] }};
+				{% for i in index3 %}
+				fCopy.push({{ fInterpol[i] }});
+				tNoise.push({{ TotalNoise_V2Hz[i] }});
+				{% endfor %}
+				var fout2 = {{ fout }};
+				var fLength = fCopy.length;
+				var integFreq=new Array();
+				for (var i=0; i<(fLength); i++){
+					integFreq[i]=(fCopy[i]*fCopy[i])*tNoise[i];
+				}
+				var ll=llIN;
+				var ul=ll*2;
+				var areaUndertNoise=0.0;
+				var areaUnderintegFreq=0.0;
+				while (ul<=ulIN) {
+					areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ul,fCopy,tNoise));
+					areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ul,fCopy,integFreq);
+					//document.writeln(phaseError);
+					//document.writeln(freqError);
+					ll=ul;
+					ul=ul*2;
+				}
+				areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ulIN,fCopy,tNoise));
+				var phaseError = (180/Math.PI)*Math.sqrt(areaUndertNoise);
+				//document.writeln(phaseError);
+				areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ulIN,fCopy,integFreq);
+				var freqError = Math.sqrt(areaUnderintegFreq)
+				//document.writeln(freqError)
+				//document.writeln(phaseError);
+				var jitter = phaseError/360.0/fout2;
+				//var banerjeertNoisedB = new Array();
+				//var banerjeetNoise = new Array();
+				//var banerjeerFreq = new Array();
+				//banerjeetNoisedB = [-77.0, -80.0, -81.5, -82.0, -81.5, -81.0, -78.0, -76.5, -76.0, -79.0, -81.5, -88.0, -94.0, -100.0, -107.0, -113.5, -121.0, -128.5, -136.0, -143.5, -151.0]
+				//banerjeeFreq = [1.00e+02, 1.58e+02, 2.51e+02, 3.98e+02, 6.31e+02, 1.00e+03, 1.58e+03, 2.51e+03, 3.98e+03, 6.31e+03, 1.00e+04, 1.58e+04, 2.51e+04, 3.98e+04, 6.31e+04, 1.00e+05, 1.58e+05, 2.51e+05, 3.98e+05, 6.31e+05, 1.00e+06]
+				//for (var j=0; j<18; j++){
+					//banerjeetNoise[j] = (banerjeeFreq[j])*(banerjeeFreq[j])*Math.pow(10,banerjeetNoisedB[j]/10.0);
+				//}
+				//banerjeetNoise[0] = Math.pow(10,banerjeetNoisedB[0]/10.0);
+				//var freqError = Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,integFreq));
+				document.getElementById('phaseErrorResult').innerHTML = phaseError.toFixed(3)+' 度数';
+				document.getElementById('jitterResult').innerHTML = jitter.toExponential(3)+' s';
+				document.getElementById('freqErrorResult').innerHTML = freqError.toFixed(3)+' Hz';
+			}
+            window.onload=function(){
+				
+				//var ll = 1.7e3;
+				//var ul = 200e3;
+				//var freqError = Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,integFreq));
+				//var phaseError = (180/Math.PI)*Math.sqrt(2*simpsonIntegral(ll,ul,fCopy,tNoise));
+				//var jitter = phaseError/360.0/fout2;
+				//document.getElementById('result2').innerHTML = freqError;
+                document.getElementById('btnCalc').onclick = intNoiseError
+				//document.getElementById('result2').innerHTML = {{ f[1] }} - {{ f[0] }};
+				//when the browser loads the page it will run calcResult function
+            }
+    </script>
+  </head>
+  <body>
+    <div class="noiseChartContainer">
+		<div class="noiseChartHeaderContainer"><div class="noiseChartHeader">锁相环噪声 <span class="error">{{ error }}</span></div></div>
+		<div id="chart_div5" class="noiseChart"></div>
+		<div class="phaseErrorHeaderContainer"><div class="phaseErrorHeader">估计相位误差和抖动</div></div>
+			<div class="phaseErrorContainer">
+				<table class="intNoiseForm">
+					<tr>
+						<td class = "intNoiseParam">
+							积分区间低的限度
+						</td>
+						<td>
+							<input type="text" id="txt1" class="intNoiseTableParamValue" value="1.7E3">
+						</td>
+					</tr>
+					<tr>
+						<td class = "intNoiseParam">
+							积分区间高的限度
+						</td>
+						<td>
+							<input type="text" id="txt2" class="intNoiseTableParamValue" value="200E3">
+						</td>
+					</tr>
+				</table>
+				<table class="intNoiseResults">
+					<thead>
+						<tr>
+							<th colspan="2" class="intNoiseResultsHeader">
+								均方根（RMS)相位误差和抖动
+							</th>
+						</tr>
+					</thead>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								均方根（RMS)相位误差
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="phaseErrorResult" ></span>
+							</td>
+						</tr>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								抖动
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="jitterResult" ></span>
+							</td>
+						</tr>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								均方根（RMS)频率误差
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="freqErrorResult" ></span>
+							</td>
+						</tr>
+				</table>
+				<button type="submit" id="btnCalc" class="submitButtonPhaseError">估计相位误差</button>
+			</div>
+		</div>
+	</div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+

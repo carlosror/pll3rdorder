@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'Closed Loop Magnitude Response'],
+			[{{ f[0] }},  {{ magCL[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dB"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ magCL[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:70,top:50,width:"75%",height:"70%"},
+          curveType: "function",
+		  title: 'Closed Loop Magnitude Response',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.0E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'Magnitude (dB)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div1'));
+        chart.draw(data, options);
+      }
+	  google.setOnLoadCallback(drawChart2)
+	  function drawChart2() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'Open Loop Magnitude Response'],
+			[{{ f[0] }},  {{ magOL[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dB"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ magOL[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:70,top:50,width:"75%",height:"70%"},
+          curveType: "function",
+		  title: 'Open Loop Magnitude Response',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.0E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'Magnitude (dB)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+	  google.setOnLoadCallback(drawChart3)
+	  function drawChart3() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'Open Loop Phase Response'],
+			[{{ f[0] }},  {{ phaseOL[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dB"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ phaseOL[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:70,top:50,width:"75%",height:"70%"},
+          curveType: "function",
+		  title: 'Open Loop Phase Response',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.0E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'Phase (degrees)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+      }
+	  google.setOnLoadCallback(drawChart4)
+	  function drawChart4() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'VCO Transfer Function'],
+			[{{ f[0] }},  {{ magvcoTF[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dB"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ magvcoTF[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:70,top:50,width:"75%",height:"70%"},
+          curveType: "function",
+		  title: 'VCO transfer function',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['red'],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'Magnitude (dB)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div4'));
+        chart.draw(data, options);
+      }
+	  
+    </script>
+  </head>
+  <body>
+    <div class="loopResponseChartContainer">
+		<div class="loopResponseChartHeaderContainer"><div class="loopResponseChartHeader">Loop Response Transfer Functions</div></div>
+		<div id="chart_div1" class="loopResponseChart1"></div>
+		<div id="chart_div2" class="loopResponseChart2"></div>
+		<div id="chart_div3" class="loopResponseChart3"></div>
+		<div id="chart_div4" class="loopResponseChart4"></div>
+	</div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+

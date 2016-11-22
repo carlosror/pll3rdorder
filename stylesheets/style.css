@@ -1,0 +1,643 @@
+body {
+  font-family: sans, arial, sans-serif;
+  font-size: 24px;
+  /*background-color: #FFB334;*/
+  /*background-color: #D3D3D3;*/
+  /*background-color: #FFE442;*/
+  background-color: #F78709;
+}
+.appTitleContainer {
+  position: relative;
+  width: 950px;
+  height: 40px;
+  margin: 12px auto -3px auto;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+}
+.appTitle {
+  position: absolute;
+  /*width: 550px;*/
+  top: 4px;
+  left: 12px;
+  bottom: 4px;
+  font-weight: bold;
+}
+.langHeader {
+  position: absolute;
+  /*width: 150px;*/
+  top: 8px;
+  right: 12px;
+  bottom: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  color: red;
+}
+.formContainer {
+  width: 950px;
+  height: 1172px;
+  background: #1E90FF;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: 0px auto 12px auto;
+  position: relative;
+}
+.pllDiag {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  bottom: 6px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.paramContainer {
+  position: absolute;
+  height: 174px;
+  width: 920px;
+  left: 12px;
+  top: 580px;
+  bottom: 6px;
+  background: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.paramTable1 {
+  position: absolute;
+  left: 12px;
+  top: 6px;
+}
+.paramShort {
+	width: 100px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	font-weight:bold;
+}
+.paramValue {
+	font-size: 20px;
+	width: 120px;
+	color: black;
+	background-color: #C0C0C0;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	text-align:right;
+	margin-top: 4px;
+	margin-bottom:4px;
+}
+.paramTable2 {
+  position: absolute;
+  left: 300px;
+  top: 6px;
+}
+.paramLong {
+	width: 200px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	font-weight:bold;
+}
+.paramTable3 {
+  position: absolute;
+  right: 12px;
+  top: 6px;
+}
+.submitButton {
+	position:absolute;
+	width: 250px;
+	height: 42px;
+	background-color: yellow;
+	color:red;
+	font-size:32px;
+	font-weight:bold;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	right:-2px;
+	top: 540px;
+}
+.submitButton:active {
+	background-color: red;
+	border-color: black;
+	color:yellow;
+}
+	
+.optionsContainer {
+  position: absolute;
+  height: 48px;
+  width: 920px;
+  left: 12px;
+  top: 768px;
+  bottom: 6px;
+  background: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.optionsTable1 {
+  position: absolute;
+  left: 12px;
+  top: 6px;
+}
+.paramLonger {
+	width: 300px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	font-weight:bold;
+}
+.optionsTable2 {
+  position: absolute;
+  right: 12px;
+  top: 6px;
+}
+#file_browse {
+	margin-left:-147px;
+	margin-top:2px;
+	opacity:0.0;
+	filter:alpha(opacity=0);
+}
+#file_browse_wrapper {
+	float: right;
+	clear: right;
+	width: 77px;
+	height: 28px;
+	background-image: url('/images/Browse3.png');
+	background-repeat:no-repeat;
+	background-position:0 0;
+	border:none;
+	margin-top: 2px;
+	overflow:hidden;
+}
+#file_browse_wrapper:active {
+background: url('/images/Browse3_click.png') 0 0 no-repeat;
+}
+.instructionsContainer {
+  position: absolute;
+  height: 180px;
+  width: 920px;
+  left: 12px;
+  top: 830px;
+  bottom: 6px;
+  background: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.instructions {
+  font-size: 20px;
+  left: 12px;
+  margin-top: 6px;
+  width: 860px;
+}
+.referencesContainer {
+  position: absolute;
+  height: 88px;
+  width: 920px;
+  left: 12px;
+  top: 1022px;
+  bottom: 6px;
+  background: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.sectionHeader {
+  position: absolute;
+  left: 12px;
+  top: 6px;
+  text-decoration: underline;
+  font-weight:bold;
+}
+.footnote {
+  position: absolute;
+  left: 18px;
+  top: 44px;
+  font-size: 20px;
+}
+.link {
+  color:red;
+  text-decoration:none;
+}
+.link:hover {
+  text-decoration:underline;
+}
+hr {
+  position: relative;
+  height: 4px;
+  width: 960px;
+  background-color:black;
+  top: 6px;	
+}
+.loopFilterTableContainer {
+  position: relative;
+  width: 950px;
+  height: 256px;
+  background: #1E90FF;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: 24px auto 12px auto;
+}
+.loopFilterTableMainHeaderContainer {
+  position: absolute;
+  width: 617px;
+  height: 40px;
+  left: 165px;
+  top: 12px;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.loopFilterTableMainHeader {
+  
+  font-weight:bold;
+  background: #C0C0C0;
+  text-align: left;
+  padding-left: 12px;
+  height: 40px;
+}
+.loopFilterDiag {
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
+  vertical-align: middle;
+}
+.loopFilterTable {
+  position:absolute;
+  top: 12px;
+  left: 170px;
+  background-color: black;
+}
+.loopFilterTableHeader {
+  font-size:20px;
+  height: 32px;
+  font-weight:bold;
+  background: #C0C0C0;
+  text-align: left;
+  padding-left: 12px;
+}
+.loopFilterTableHeader2 {
+  font-size:20px;
+  
+  font-weight:bold;
+  background: #C0C0C0;
+  text-align: left;
+  padding-left: 12px;
+  height: 32px;
+}
+.loopFilterTableParameter {
+	color: red;
+	font-size: 20px;
+	background-color: white;
+	text-align:center;
+	position: relative;
+	width: 100px;
+	height: 26px;
+}
+.loopFilterTableValue {
+	color: red;
+	font-size: 20px;
+	background-color: white;
+	text-align:center;
+	width: 200px;
+	height: 26px;
+}
+.loopResponseChartContainer {
+  position: relative;
+  width: 950px;
+  height: 920px;
+  background: #1E90FF;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: 12px auto;
+}
+.loopResponseChartHeaderContainer {
+  position: absolute;
+  width: 920px;
+  height: 40px;
+  left: 12px;
+  top: 12px;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.loopResponseChartHeader {
+  position: absolute;
+  width: 900px;
+  top: 4px;
+  bottom:4px;
+  left: 12px;
+  font-weight:bold;
+}
+.loopResponseChart1 {
+  width: 460px;
+  height: 425px;
+  position:absolute;
+  left:12px;
+  top: 52px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.loopResponseChart2 {
+  width: 460px;
+  height: 425px;
+  position:absolute;
+  left:472px;
+  top: 52px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.loopResponseChart3 {
+  width: 460px;
+  height: 425px;
+  position:absolute;
+  left:12px;
+  top: 477px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.loopResponseChart4 {
+  width: 460px;
+  height: 425px;
+  position:absolute;
+  left:472px;
+  top: 477px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.noiseChartContainer {
+  position: relative;
+  width: 950px;
+  height: 1110px;
+  background: #1E90FF;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: 12px auto;
+}
+.noiseChartHeaderContainer {
+  position: absolute;
+  width: 920px;
+  height: 40px;
+  left: 12px;
+  top: 12px;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.noiseChartHeader {
+  position: absolute;
+  width: 900px;
+  top: 4px;
+  bottom:4px;
+  left: 12px;
+  font-weight:bold;
+}
+.noiseChart {
+  width: 920px;
+  height: 850px;
+  position:absolute;
+  left:12px;
+  top: 52px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.phaseErrorHeaderContainer {
+  position: absolute;
+  width: 920px;
+  height: 40px;
+  left: 12px;
+  top: 904px;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.phaseErrorHeader {
+  position: absolute;
+  width: 900px;
+  top: 4px;
+  bottom:4px;
+  left: 12px;
+  font-weight:bold;
+}
+.phaseErrorContainer {
+  position: absolute;
+  width: 920px;
+  height: 150px;
+  left: 12px;
+  top: 944px;
+  background: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.intNoiseForm{
+  position: absolute;
+  left: 12px;
+  top: 6px;
+}
+.intNoiseParam{
+	font-size: 20px;
+	width: 300px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	font-weight:bold;
+}
+.intNoiseTableParamValue {
+	font-size: 20px;
+	width: 120px;
+	color: black;
+	background-color: #C0C0C0;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	text-align:right;
+	margin-top: 4px;
+	margin-bottom:4px;
+}
+.submitButtonPhaseError {
+	position:absolute;
+	width: 280px;
+	height: 32px;
+	background-color: yellow;
+	color:red;
+	font-size:24px;
+	font-weight:bold;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	left:162px;
+	top: 96px;
+}
+.submitButtonPhaseError:active {
+	background-color: red;
+	border-color: black;
+	color:yellow;
+}
+.intNoiseResults{
+  position: absolute;
+  right: 12px;
+  top: 6px;
+  background-color:black;
+}
+.intNoiseResultsHeader {
+  font-size:20px;
+  height: 26px;
+  font-weight:bold;
+  background: #C0C0C0;
+}
+.intNoiseResultParameter {
+  font-size: 20px;
+  width: 250px;
+  height: 26px;
+  background: white;
+  color:red;
+}
+.intNoiseResultValue {
+  font-size: 20px;
+  width: 170px;
+  height: 26px;
+  background: white;
+  color:red;
+  text-align: center;
+}
+.timeResponseChartContainer {
+  position: relative;
+  width: 950px;
+  height: 1074px;
+  background: #1E90FF;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: 12px auto;
+}
+.timeResponseChartHeaderContainer {
+  position: absolute;
+  width: 920px;
+  height: 40px;
+  left: 12px;
+  top: 12px;
+  background: #C0C0C0;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.timeResponseChartHeader {
+  position: absolute;
+  width: 900px;
+  top: 4px;
+  bottom:4px;
+  left: 12px;
+  font-weight:bold;
+}
+.timeResponseChart {
+  width: 920px;
+  height: 850px;
+  position:absolute;
+  left:12px;
+  top: 52px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.lockTimesTable {
+	position: absolute;
+	left: 12px;
+	top: 904px;
+	background-color:black;
+}
+.lockTimesTableHeader {
+  font-size:24px;
+  height: 32px;
+  font-weight:bold;
+  background: #C0C0C0;
+  text-align: left;
+  padding-left: 12px;
+}
+.lockTimesTableParameter {
+  font-size: 20px;
+  width: 750px;
+  height: 26px;
+  background: white;
+  color:red;
+  padding-left:16px;
+}
+.lockTimesTableValue {
+  font-size: 20px;
+  width: 149px;
+  height: 26px;
+  background: white;
+  color:red;
+  text-align: center;
+}
+  
+#excelFile{
+	margin-left: 5px;
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	margin-top: 8px;
+	font-weight:bold;
+}
+#excelFile2{
+	margin-left: 5px;
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	font-weight:bold;
+}
+.largeHeader {
+	clear:both;
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 28px;
+	font-weight: bold;
+	text-decoration: underline;
+	margin-left:20px;
+}
+.gChart{
+	width: 600px;
+	height: 425px;
+	float: left;
+}
+.gChart2{
+	width: 1200px;
+	height: 850px;
+	float: left;
+}
+.bigBorder {
+	width: 100%;
+}
+.error {
+	color: red;
+	font-size: 15px;
+}
+.intNoiseTable {
+	clear:both;
+	width: 500px;
+	margin-left: 85px;
+	background-color:black;
+}
+.intNoiseTableParameter {
+	font-family: sans, arial, sans-serif;
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: white;
+	text-align:center;
+	position: relative;
+	width: 300px;
+}
+

@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+	</head>
+	<body>
+		<table class = "lockTimesTable">
+			<thead>
+				<tr>
+					<th colspan="2" class="loopFilterTableHeader">
+						PLL Lock Times
+					</th>
+				</tr>
+			</thead>
+			<tr>
+				<td a class="loopFilterTableParameter">
+					Loop locks within 0.001% ({{ lT_0p001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="loopFilterTableValue">
+					{{ lT_0p001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="loopFilterTableParameter" >
+					Loop locks within 0.0001% ({{ lT_0p0001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="loopFilterTableValue">
+					{{ lT_0p0001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="loopFilterTableParameter" >
+					Loop locks within 0.00001% ({{ lT_0p00001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="loopFilterTableValue">
+					{{ lT_0p00001Pcnt }} s
+				</td>
+			</tr>
+			<tr>
+				<td a class="loopFilterTableParameter" >
+					Loop locks within 0.000001% ({{ lT_0p000001PcntActual  }} Hz) of the target frequency in
+				</td>
+				<td class="loopFilterTableValue">
+					{{ lT_0p000001Pcnt }} s
+				</td>
+			</tr>
+			
+		</table>
+		<br>
+	</body>
+</html>

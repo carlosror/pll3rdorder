@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <script type="text/javascript">
+            function calcResult(){
+                document.getElementById('result').innerHTML = '';
+                var num1 = new Number(document.getElementById('txt1').value);
+                var num2 = new Number(document.getElementById('txt2').value);
+                if(isNaN(num1) || isNaN(num2)){
+                    alert('One or both inputs are not a number');
+                } else {
+                    document.getElementById('result').innerHTML = num1 - num2;
+                }
+            }
+            window.onload=function(){
+                document.getElementById('btnCalc').onclick = calcResult;
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            Enter value 1 <input type="text" id="txt1" /><br />
+            Enter value 2 <input type="text" id="txt2" /><br />
+            <button id="btnCalc">Calculate difference</button>
+            <div id="result"></div>
+        </div>
+    </body>
+</html>

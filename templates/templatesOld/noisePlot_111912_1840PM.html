@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'PFDCP Noise', 'Prescaler Noise', 'VCO Noise', 'R2 Noise', 'R3 Noise', 'Total Noise'],
+			[{{ f[0] }},  {{ PFDCPNoiseOut[0] }}, {{ PrescalerNoiseOut[0] }}, {{ VCONoiseOut[0] }}, {{ R2NoiseOut[0] }}, {{ R3NoiseOut[0] }}, {{ TotalNoise[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"##.##"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.###E0"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ PFDCPNoiseOut[i] }}, {{ PrescalerNoiseOut[i] }}, {{ VCONoiseOut[i] }},  {{ R2NoiseOut[i] }}, {{ R3NoiseOut[i] }}, {{ TotalNoise[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:100,top:80,width:"90%",height:"80%"},
+          curveType: "function",
+		  title: 'PLL Output Noise Contributors',
+		  lineWidth: 2,
+		  legend:{position: 'top', textStyle: {color: 'blue', fontSize: 16}},
+		  colors:['#FF00FF','#0000FF', '#00FF00', '#660000', '#0099FF', '#FF0000'],
+		  series: [{},{}, {},{},{}, {color: 'red', lineWidth: 4}],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.#E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minValue: 0.1, minorGridlines: {count: 1}},
+		  vAxis:{title:'PLL Output Noise (dBc/Hz)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+      }
+	  
+	  
+    </script>
+  </head>
+  <body>
+    <p class="largeHeader">Noise</p>
+    <div id="chart_div5" class="gChart2"></div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+

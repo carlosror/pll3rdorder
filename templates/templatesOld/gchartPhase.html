@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'Phase'],
+			[{{ f[0] }},  {{ phase[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"##.##"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.###E0"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ phase[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+          curveType: "function",
+		  title: 'Phase versus freq',
+		  lineWidth: 4,
+		  legend:{position:'none'},
+		  colors:['blue'],
+		  titleTextStyle:{fontName: 'Arial', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'', format: "0.#E0", titleTextStyle: {color: '#FF0000',fontName: 'Archer', fontSize: 20}, logScale: true, gridlines: {count: 4, color: 'red'}, minValue: 0.1, minorGridlines: {count: 1}},
+		  vAxis:{title:'', titleTextStyle: {color: '#FF0000',fontName: 'Archer', fontSize: 20}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+      }
+	  
+    </script>
+  </head>
+  <body>
+    <div id="chart_div3" style="width: 600px; height: 425px; border-bottom-style: solid; border-bottom-color: black; border-width: 1px;"></div>
+	<!--<div id="chart_div" class="chart"></div>-->
+  </body>
+</html>
+

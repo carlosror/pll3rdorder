@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Third Order Phase Locked Loop App</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+		<link rel="stylesheet" href="/stylesheets/hint.css">
+	</head>
+	<body>
+	<div class="appTitleContainer"><div class="appTitle">3<sup>rd</sup> order Phase Locked Loop App</div></div>
+	<div class="formContainer"><img class="pllDiag" src="/images/PLLDiagram_920px.png" ><div class="paramContainer">
+		<form method="post" enctype="multipart/form-data" >
+			<table class="paramTable1">
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="Charge Pump Gain">K<sub>&Phi;</sub></span>
+					</td>
+					<td>
+						<input type="text" name="Kphi" class="paramValue" value={{ dictStringSubst['Kphi'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="VCO Gain in Hz/V">K<sub>VCO</sub></span>
+					</td>
+					<td>
+						<input type="text" name="KVCO" class="paramValue" value={{ dictStringSubst['KVCO'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="Prescaler Modulus">P</span>
+					</td>
+					<td>
+						<input type="text" name="P" class="paramValue" value={{ dictStringSubst['P'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="Reference Divider Divide Ratio">R</span>
+					</td>
+					<td>
+						<input type="text" name="R" class="paramValue" value={{ dictStringSubst['R'] }}>
+					</td>
+				</tr>
+			</table>
+			<table class="paramTable2">
+				<tr>
+					<td class = "paramLong">
+						<span class="hint--right" data-hint="Phase locked loop phase margin, in degrees">Phase Margin</span>
+					</td>
+					<td>
+						<input type="text" name="PM" class="paramValue" value={{ dictStringSubst['PM'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramLong">
+						<span class="hint--right" data-hint="Phase locked loop bandwidth, in Hz">Loop Bandwidth</span>
+					</td>
+					<td>
+						<input type="text" name="LoopBW" class="paramValue" value={{ dictStringSubst['LoopBW'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramLong">
+						<span class="hint--right" data-hint="Phase locked loop optimization factor">Gamma</span>
+					</td>
+					<td>
+						<input type="text" name="Gamma" class="paramValue" value={{ dictStringSubst['Gamma'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramLong">
+						<span class="hint--right" data-hint="Ratio of loop pole T3 to loop pole T1">T<sub>31</sub></span>
+					</td>
+					<td>
+						<input type="text" name="T31" class="paramValue" value={{ dictStringSubst['T31'] }}>
+					</td>
+				</tr>
+			</table>
+			<table class="paramTable3">
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="Reference Frequency in Hz">F<sub>ref</sub></span>
+					</td>
+					<td>
+						<input type="text" name="Fref" class="paramValue" value={{ dictStringSubst['Fref'] }}>
+					</td>
+				</tr>
+				<tr>
+					<td class = "paramShort">
+						<span class="hint--right" data-hint="Output Frequency in Hz">F<sub>out</sub></span>
+					</td>
+					<td>
+						<input type="text" name="Fout" class="paramValue" value={{ dictStringSubst['Fout'] }}>
+					</td>
+				</tr>
+			</table>
+			<input type="submit" value="Evaluate PLL" class="submitButton">
+		</div>
+		<div class="optionsContainer">
+			<table class="optionsTable1">
+				<tr>
+						<td class="paramLonger">
+							<span class="hint--right" data-hint="Checking here prints all results to an Excel file, prompts for download">Generate Excel report</span><input type="checkbox" name="excelResults" value="wantExcelResults" >
+						</td>
+				</tr>
+			</table>
+			<table class="optionsTable2">
+				<tr>
+					<td class="paramLonger">
+						<span class="hint--left" data-hint="Download Excel file with noise sources data, modify with your own data, and upload">Upload noise file:</span
+					</td>
+					<td >
+						<div id='file_browse_wrapper'><input type="file" name="noiseFile" id='file_browse'></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		</form>
+		<div class="instructionsContainer">
+			<ul class="instructions">
+				<li class="instructions">Enter PLL parameters and submit by clicking on "Evaluate PLL".</li>
+				<li class="instructions">To upload noise sources data, first <a class = "link" href="/download/noiseSources">download</a> the default noise sources Excel file, 
+				edit it, then upload it. If no noise file is uploaded, default noise data is used.</li>
+				<li class="instructions">Following the phase noise plot, enter an integration interval to estimate the RMS phase error.</li>
+				<li class="instructions">Checking "Generate Excel report" and submitting prints results to an Excel file.</li>
+				<li class="instructions">NO DATA IS STORED.</li>
+			</ul>
+		</div>
+		<div class="referencesContainer">
+			<div class="sectionHeader">References:</div>
+			<div class="footnote">
+				<sup>1</sup><em><a class = "link" href="http://www.ti.com/tool/pll_book" target="_blank">
+				PLL Performance Simulation and Design Handbook - 4th Edition</em></a>
+				Dean Banerjee. 2006.<br><br>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>

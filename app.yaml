@@ -1,0 +1,34 @@
+application: pll3rdorder
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /images/(.*\..*)
+  static_files: static/images/\1
+  upload: static/images/(.*\..*)
+
+- url: /download/noiseSources
+  script: downloadNoiseSources.app
+
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /zw
+  script: mainzw.app
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "2.5.1"
+- name: numpy
+  version: "1.6.1"
+- name: jinja2
+  version: "2.6"

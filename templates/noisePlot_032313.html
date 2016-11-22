@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'XTAL Noise', 'PFDCP Noise', 'Prescaler Noise', 'VCO Noise', 'R2 Noise', 'R3 Noise', 'SD Noise', 'Total Noise'],
+			[{{ f[0] }},  {{ XTALNoiseOut[0] }}, {{ PFDCPNoiseOut[0] }}, {{ PrescalerNoiseOut[0] }}, {{ VCONoiseOut[0] }}, {{ R2NoiseOut[0] }}, {{ R3NoiseOut[0] }}, {{ SDNoiseOut[0] }}, {{ TotalNoise[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dBc/Hz"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ XTALNoiseOut[i] }}, {{ PFDCPNoiseOut[i] }}, {{ PrescalerNoiseOut[i] }}, {{ VCONoiseOut[i] }},  {{ R2NoiseOut[i] }}, {{ R3NoiseOut[i] }}, {{ SDNoiseOut[i] }}, {{ TotalNoise[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterYtoolTips.format(data, 2);//format y Axis tooltips
+		formatterYtoolTips.format(data, 3);//format y Axis tooltips
+		formatterYtoolTips.format(data, 4);//format y Axis tooltips
+		formatterYtoolTips.format(data, 5);//format y Axis tooltips
+		formatterYtoolTips.format(data, 6);//format y Axis tooltips
+		formatterYtoolTips.format(data, 7);//format y Axis tooltips
+		formatterYtoolTips.format(data, 8);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:80,top:100,width:"85%",height:"80%"},
+          curveType: "function",
+		  title: 'PLL Output Noise Contributors',
+		  lineWidth: 2,
+		  legend:{position: 'top', textStyle: {color: 'blue', fontSize: 11.5}},
+		  colors:['#CC3300','#FF00FF','#0000FF', '#00FF00', '#660000', '#0099FF', '#FF9900', '#FF0000'],
+		  series: [{}, {}, {}, {}, {}, {}, {}, {color: 'red', lineWidth: 4}],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.#E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'PLL Output Noise (dBc/Hz)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+      }
+	  
+	  
+    </script>
+  </head>
+  <body>
+    <div class="noiseChartContainer">
+		<div class="noiseChartHeaderContainer"><div class="noiseChartHeader">PLL Noise <span class="error">{{ error }}</span></div></div>
+		<div id="chart_div5" class="noiseChart"></div>
+		<div class="phaseErrorHeaderContainer"><div class="phaseErrorHeader">Estimate phase error and jitter</div></div>
+			<div class="phaseErrorContainer">
+				<table class="intNoiseForm">
+					<tr>
+						<td class = "intNoiseParam">
+							Lower Integration Limit
+						</td>
+						<td>
+							<input type="text" id="txt1" class="intNoiseTableParamValue" value="1.7E3">
+						</td>
+					</tr>
+					<tr>
+						<td class = "intNoiseParam">
+							Upper Integration Limit
+						</td>
+						<td>
+							<input type="text" id="txt2" class="intNoiseTableParamValue" value="200E3">
+						</td>
+					</tr>
+				</table>
+				<table class="intNoiseResults">
+					<thead>
+						<tr>
+							<th colspan="2" class="intNoiseResultsHeader">
+								RMS Phase Error and Jitter
+							</th>
+						</tr>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								RMS Phase Error
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="phaseErrorResult" ></span>
+							</td>
+						</tr>
+					</thead>
+				</table>
+				<button type="submit" id="btnCalc" class="submitButtonPhaseError">Estimate Phase Error</button>
+			</div>
+		</div>
+	</div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+

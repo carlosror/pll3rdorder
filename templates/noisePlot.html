@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+	  
+      function drawChart() {
+		
+        var data = google.visualization.arrayToDataTable([
+			['Frequency', 'XTAL Noise', 'PFDCP Noise', 'Prescaler Noise', 'VCO Noise', 'R2 Noise', 'R3 Noise', 'SD Noise', 'Total Noise'],
+			[{{ f[0] }},  {{ XTALNoiseOut[0] }}, {{ PFDCPNoiseOut[0] }}, {{ PrescalerNoiseOut[0] }}, {{ VCONoiseOut[0] }}, {{ R2NoiseOut[0] }}, {{ R3NoiseOut[0] }}, {{ SDNoiseOut[0] }}, {{ TotalNoise[0] }}]
+		]);
+		var formatterYtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.00 dBc/Hz"
+		});
+		var formatterXtoolTips = new google.visualization.NumberFormat({
+			pattern:"0.000E0 Hz"
+		});
+		
+		{% for i in index2 %}
+		data.addRows([[{{ f[i] }}, {{ XTALNoiseOut[i] }}, {{ PFDCPNoiseOut[i] }}, {{ PrescalerNoiseOut[i] }}, {{ VCONoiseOut[i] }},  {{ R2NoiseOut[i] }}, {{ R3NoiseOut[i] }}, {{ SDNoiseOut[i] }}, {{ TotalNoise[i] }}]]);
+		{% endfor %}
+		formatterYtoolTips.format(data, 1);//format y Axis tooltips
+		formatterYtoolTips.format(data, 2);//format y Axis tooltips
+		formatterYtoolTips.format(data, 3);//format y Axis tooltips
+		formatterYtoolTips.format(data, 4);//format y Axis tooltips
+		formatterYtoolTips.format(data, 5);//format y Axis tooltips
+		formatterYtoolTips.format(data, 6);//format y Axis tooltips
+		formatterYtoolTips.format(data, 7);//format y Axis tooltips
+		formatterYtoolTips.format(data, 8);//format y Axis tooltips
+		formatterXtoolTips.format(data, 0);//format x Axis tooltips
+        var options = {
+		  chartArea:{left:80,top:100,width:"85%",height:"80%"},
+          curveType: "function",
+		  title: 'PLL Output Noise Contributors',
+		  lineWidth: 2,
+		  legend:{position: 'top', textStyle: {color: 'blue', fontSize: 11.5}},
+		  colors:['#CC3300','#FF00FF','#0000FF', '#00FF00', '#660000', '#0099FF', '#FF9900', '#FF0000'],
+		  series: [{}, {}, {}, {}, {}, {}, {}, {color: 'red', lineWidth: 4}],
+		  titleTextStyle:{fontName: 'sans-serif', fontSize: 20},
+		  backgroundColor:{fill: 'white'},
+		  hAxis:{title:'Frequency (Hz)', format: "0.#E0", titleTextStyle: {fontName: 'sans-serif', fontSize: 16}, logScale: true, gridlines: {count: 4, color: 'black'}, minorGridlines: {count: 1}},
+		  vAxis:{title:'PLL Output Noise (dBc/Hz)', titleTextStyle: {fontName: 'sans-serif', fontSize: 16}}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+      }
+	  
+	  
+    </script>
+	<script type="text/javascript">
+			function findClosest(x,f){
+				var fLength=f.length;
+				var smallestError = f[fLength-1];
+				var index;
+				for (var i=0; i<(fLength); i++){
+					if (Math.abs(x-f[i])<smallestError){
+						index = i;
+						smallestError = Math.abs(x-f[i]);
+					}
+					//smallestError=f[i];
+				}
+				return index;
+			}
+			function simpsonIntegral(ll,ul,frequencyArray,funcOfFreq){
+				var actualLLIndex = findClosest(ll,frequencyArray);
+				var lowerFreq = frequencyArray[actualLLIndex];
+				var actualULIndex = findClosest(ul,frequencyArray);
+				var upperFreq = frequencyArray[actualULIndex];
+				var midPoint = (ll + ul)/2.0;
+				var actualMidPointIndex = findClosest(midPoint,frequencyArray);
+				var midFreq = frequencyArray[actualMidPointIndex];
+				var intValue = ((upperFreq - lowerFreq)/6.0)*(funcOfFreq[actualLLIndex] + 4*funcOfFreq[actualMidPointIndex] + funcOfFreq[actualULIndex]);
+				return intValue;
+			}
+			function intNoiseError () {
+			    /*
+				** Computes RMS phase error of PLL by integrating the (interpolated)
+				** output-referred phase noise using the lower (llIN) and upper
+				** (ulIN) integration limits entered by the user. The function
+				** also computes the RMS frequency error and jitter of the PLL.
+				*/
+				var llIN = new Number(document.getElementById('txt1').value);
+				var ulIN = new Number(document.getElementById('txt2').value);
+				var fCopy=new Array();
+				fCopy[0] = {{ fInterpol[0] }};
+				var tNoise = new Array();
+				tNoise[0] = {{ TotalNoise_V2Hz[0] }};
+				{% for i in index3 %}
+				fCopy.push({{ fInterpol[i] }});
+				tNoise.push({{ TotalNoise_V2Hz[i] }});
+				{% endfor %}
+				var fout2 = {{ fout }};
+				var fLength = fCopy.length;
+				var integFreq=new Array();
+				for (var i=0; i<(fLength); i++){
+					integFreq[i]=(fCopy[i]*fCopy[i])*tNoise[i];
+				}
+				var ll=llIN;
+				var ul=ll*2;
+				var areaUndertNoise=0.0;
+				var areaUnderintegFreq=0.0;
+				while (ul<=ulIN) {
+					areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ul,fCopy,tNoise));
+					areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ul,fCopy,integFreq);
+					ll=ul;
+					ul=ul*2;
+				}
+				areaUndertNoise = areaUndertNoise + (2*simpsonIntegral(ll,ulIN,fCopy,tNoise));
+				var phaseError = (180/Math.PI)*Math.sqrt(areaUndertNoise);
+				//document.writeln(phaseError);
+				areaUnderintegFreq = areaUnderintegFreq + 2*simpsonIntegral(ll,ulIN,fCopy,integFreq);
+				var freqError = Math.sqrt(areaUnderintegFreq)
+				var jitter = phaseError/360.0/fout2;
+				document.getElementById('phaseErrorResult').innerHTML = phaseError.toFixed(3)+' degrees';
+				document.getElementById('jitterResult').innerHTML = jitter.toExponential(3)+' s';
+				document.getElementById('freqErrorResult').innerHTML = freqError.toFixed(3)+' Hz';
+			}
+            window.onload=function(){
+                document.getElementById('btnCalc').onclick = intNoiseError
+            }
+    </script>
+  </head>
+  <body>
+    <div class="noiseChartContainer">
+		<div class="noiseChartHeaderContainer"><div class="noiseChartHeader">PLL Noise <span class="error">{{ error }}</span></div></div>
+		<div id="chart_div5" class="noiseChart"></div>
+		<div class="phaseErrorHeaderContainer"><div class="phaseErrorHeader">Estimate phase error and jitter</div></div>
+			<div class="phaseErrorContainer">
+				<table class="intNoiseForm">
+					<tr>
+						<td class = "intNoiseParam">
+							Lower Integration Limit
+						</td>
+						<td>
+							<input type="text" id="txt1" class="intNoiseTableParamValue" value="1.7E3">
+						</td>
+					</tr>
+					<tr>
+						<td class = "intNoiseParam">
+							Upper Integration Limit
+						</td>
+						<td>
+							<input type="text" id="txt2" class="intNoiseTableParamValue" value="200E3">
+						</td>
+					</tr>
+				</table>
+				<table class="intNoiseResults">
+					<thead>
+						<tr>
+							<th colspan="2" class="intNoiseResultsHeader">
+								RMS Phase Error and Jitter
+							</th>
+						</tr>
+					</thead>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								RMS Phase Error
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="phaseErrorResult" ></span>
+							</td>
+						</tr>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								Jitter
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="jitterResult" ></span>
+							</td>
+						</tr>
+						<tr>
+							<td a class="intNoiseResultParameter">
+								RMS Frequency Error
+							</td>
+							<td class="intNoiseResultValue">
+								<span id="freqErrorResult" ></span>
+							</td>
+						</tr>
+				</table>
+				<button type="submit" id="btnCalc" class="submitButtonPhaseError">Estimate Phase Error</button>
+			</div>
+		</div>
+	</div>
+	<!--<div id="chart_div" class="chart"></div>-->
+	<br style="clear:both;">
+  </body>
+</html>
+
