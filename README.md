@@ -26,7 +26,7 @@ Clicking on that "Evaluate PLL" button generates quite a bit of output!
 ### Loop filter
 The tool's Python backend computes the values of the loop filter components, given the input parameters.
 
-![Alt](./docs_images/loop_filter.jpg "Loop Filter")
+![Alt](/docs_images/loop_filter.jpg?raw=true "Loop Filter")
 
 
 ### Loop response transfer functions
