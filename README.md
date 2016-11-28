@@ -60,7 +60,7 @@ freq = np.logspace(2,8,31)
 
 ### Phase error and jitter
 
-The tool estimates the RMS phase and frequency errors as well as the jitter. I think I integrated the noise using [Simpson's rule for numerical integration](https://en.wikipedia.org/wiki/Simpson's_rule), but I don't remember the details. I did this part in JavaScript. I can't remember why I didn't do it in Python.
+The tool estimates the RMS phase and frequency errors as well as the jitter using the integration limits you enter. I think I integrated the noise using [Simpson's rule for numerical integration](https://en.wikipedia.org/wiki/Simpson's_rule), but I don't remember the details. I did this part in JavaScript.
 
 ![Alt](docs_images/phase_error.JPG "Phase error and jitter")
 
@@ -71,3 +71,11 @@ The tool's Python backend computes the time response to a frequency step and the
 ![Alt](docs_images/time_response.JPG "Time response")
 
 ![Alt](docs_images/lock_times.JPG "Lock times")
+
+## References
+
+1. Banerjee, Dean. [**PLL Performance Simulation and Design Handbook, Fourth Edition**](http://www.ti.com/tool/pll_book), 2006. PDF
+
+2. Grimson, Eric and  Guttag, John. [**MIT 6.00 - Introduction to Computer Science and Programmming**](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00-introduction-to-computer-science-and-programming-fall-2008/), Fall 2008. OCW.
+
+3. Huffman, Steve. [**CS253 - Web Development**](https://www.udacity.com/course/web-development--cs253), Spring 2012, Udacity.
