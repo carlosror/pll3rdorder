@@ -13,9 +13,9 @@ I used those three building blocks (Banerjee's book, MIT's 6.00, and Udacity's C
 
 ## Technologies
 
-**Backend**: Python and Python modules numpy, xlrd, and xlwt, Google App Engine, Jinja2 templating engine
+**Backend**: [Python](https://www.python.org/) and Python modules [numpy](https://docs.scipy.org/doc/numpy-dev/user/quickstart.html), [xlrd](http://www.python-excel.org/), and [xlwt](http://www.python-excel.org/), [Google App Engine](https://cloud.google.com/appengine/docs/python/), [Jinja2](http://jinja.pocoo.org/) templating engine
 
-**Frontend**: HTML5(HTML/CSS/JavaScript), Hint.css for tooltips, Google Charts
+**Frontend**: [HTML5(HTML/CSS/JavaScript)](https://www.wickedlysmart.com/head-first-html5/), [Hint.css](https://kushagragour.in/lab/hint/) for tooltips, [Google Charts](https://developers.google.com/chart/interactive/docs/gallery)
 
 Generally speaking, the computations are done in the backend using Python and numpy, then Jinja2 populates the templates in the frontend with the results. The only computations that are done in the frontend are the phase error and jitter.
 
