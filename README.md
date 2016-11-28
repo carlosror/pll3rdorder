@@ -19,6 +19,14 @@ I used those three building blocks (Banerjee's book, MIT's 6.00, and Udacity's C
 
 Generally speaking, the computations are done in the backend using Python and numpy, then Jinja2 populates the templates in the frontend with the results. The only computations that are done in the frontend are the phase error and jitter.
 
+Here is an example using (a section of) the template for the Loop Filter components. On the backend, Python computes the capacitor (C) and resistor (R) values, then Jinja fetches the loop filter template and renders it:
+
+![Alt](docs_images/template_1.JPG?raw=true "Rendering template")
+
+The actual template has some placeholders, e.g., {{ C1 }}, {{ C2 }}, etc., and when Jinja renders those placeholders are replaced with the actual values of the capacitors.
+
+![Alt](docs_images/template_2.JPG?raw=true "Loop filter template")
+
 ## Features
 
 Clicking on that "Evaluate PLL" button generates quite a bit of output!
