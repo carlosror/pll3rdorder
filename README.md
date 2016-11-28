@@ -71,3 +71,11 @@ The tool's Python backend computes the time response to a frequency step and the
 ![Alt](docs_images/time_response.JPG "Time response")
 
 ![Alt](docs_images/lock_times.JPG "Lock times")
+
+## References
+
+1. Banerjee, Dean. [**PLL Performance Simulation and Design Handbook, Fourth Edition**](http://www.ti.com/tool/pll_book), 2006. PDF
+
+2. Grimson, Eric and  Guttag, John. [**MIT 6.00 - Introduction to Computer Science and Programmming**](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00-introduction-to-computer-science-and-programming-fall-2008/), Fall 2008. OCW.
+
+3. Huffman, Steve. [**CS253 - Web Development**](https://www.udacity.com/course/web-development--cs253), Spring 2012, Udacity.
